@@ -55,6 +55,12 @@ move::move(T &&arg)
     this->intValue = 69;
     this->dbValue = 69.69;
     this->castedVariable = std::move(arg);
+    move()
+    {
+        this->intValue = 69;
+        this->dbValue = 69.69;
+        this->castedVariable = std::move(arg);
+    }
 }
 
 move::params move::showClass()
@@ -63,7 +69,7 @@ move::params move::showClass()
               << "\n";
     std::cout << this->intValue << " " << this->dbValue << " and the casted value: " << this->castedVariable;
     std::cout << "\n";
-    params result;
+    params result();
     return result;
 }
 #endif // MOVE_HH
