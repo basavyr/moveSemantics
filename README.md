@@ -12,3 +12,20 @@ See the [EXTRAS](/sources.md) for the documentation used in the development stag
 ## Opened issues
 
  [ ] - The `#include <bits/stdc++.h> ` header is not available in macOS Catalina. So in the present state, `main.cc` file can't compile successfully.
+
+## Compile the project with custom compilers
+
+Instead of hardcoding the `CMakeLists.txt` configuration file with:
+
+```cmake
+set(CMAKE_C_COMPILER "path/to/c-compiler")
+set(CMAKE_CXX_COMPILER "/path/to/cxx-compiler")
+```
+
+One should use the `CC` and `CXX` flags when building the project with CMake
+
+> *The best method is to set the environment variables CC and CXX before calling CMake for the very first time in a build tree. After CMake detects what compilers to use, it saves them in the CMakeCache.txt file so that it can still generate proper build systems even if those variables disappear from the environment... If you ever need to change compilers, you need to start with a fresh build tree.* [^1]
+
+[^1]:According to a SO post on choosing the right method for compiling.  https://stackoverflow.com/a/13089688/8295213
+
+More details on [gitlab](https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#how-do-i-use-a-different-compiler)
