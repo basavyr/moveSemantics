@@ -28,4 +28,13 @@ One should use the `CC` and `CXX` flags when building the project with CMake
 
 [^1]:According to a SO post on choosing the right method for compiling.  https://stackoverflow.com/a/13089688/8295213
 
+The command which has to be introduced in the terminal, when building with CMake is:
+
+```bash
+CC=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang CXX=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ cmake ..
+```
+
 More details on [gitlab](https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#how-do-i-use-a-different-compiler)
+
+The project's `CMakeLists.txt` file has also some custom variables which are set in the configuration, like the compiler paths.
+The source for such variables is taken from this SO [post](https://stackoverflow.com/questions/31037882/whats-the-cmake-syntax-to-set-and-use-variables).
