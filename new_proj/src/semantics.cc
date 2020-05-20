@@ -2,6 +2,7 @@
 #include <utility>
 #include <cstring>
 #include <vector>
+#include <memory>
 
 inline void line() { std::cout << "\n"; }
 
@@ -41,8 +42,41 @@ std::vector<int> make_vector(size_t n)
     v.at(static_cast<int>(n / 2)) = 69;
     //avoids copying n elements in this function
     //usually returning by value will copy v;
+    //using std::move here, copying is avoided, due to returning the "stolen" resources from v
     return std::move(v);
 }
+
+//create a function that adds vector
+void add_vector(size_t n, std::vector<int> &v)
+{
+    std::vector<int> dest(n);
+    dest.at(static_cast<int>(n / 2));
+    v.emplace_back(std::move(dest)); //usually dest is an lvalue, and the program will keep dest in memory for the entire runtime.
+    //compiler will not move the dest by itself just like in the "return" example above, one has to explicitely set a move operator for such operation
+}
+
+//*the standard c++98 assignment operator
+//! class& operator=(const class & element) -> copy assignment operator in C++11    -> will be selected for lvalues
+//! class& operator=(class &&element)  -> move assignment operator for rvalues
+
+//?write an operator that does both copy assignment or move assignment depending on the case
+//? for the unique operator, instead of taking the argument as a constant reference, passing by value should be implemented
+
+/* type &operator=(type value){
+    std::swap(value); the value "value" gets deleted after the ";" 
+}
+*/
+// ! this copies the value
+
+//!move only types
+//smart pointers -> unique pointers -> unique owndership
+//shared pointers -> also introduces "reference counting"
+
+auto upi = std::make_unique<int>(1); //?c++14
+
+//auto upi2 = upi;//can't work  since copying unique pointer is not allowed (copying will imply 2 owners for upi)
+
+
 
 int main()
 {
